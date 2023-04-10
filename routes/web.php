@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminsController;
+use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\FilmController;
+use App\Http\Controllers\MovieController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
-Route::get('/film', [FilmController::class, 'show'])->name('film');
+Route::get('/film', [MovieController::class, 'show'])->name('film');
 
 Route::middleware([
     'auth:sanctum',
@@ -31,7 +32,6 @@ Route::middleware([
 });
 
 Route::middleware('auth')->prefix('admin')->group(function () {
-    Route::resource('film', FilmController::class)->except([
-        'show'
-    ]);
+    Route::resource('movies', MovieController::class);
+    Route::resource('genres', GenreController::class);
 });

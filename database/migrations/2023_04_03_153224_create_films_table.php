@@ -15,15 +15,16 @@ return new class extends Migration
     {
         Schema::create('films', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained();
             $table->string('title');
-            $table->string('film_image')->nullable();
-            $table->string('genre');
-            $table->longText('description')->nullable();
+            $table->string('cover')->nullable();
+            $table->string('image')->nullable();
+            $table->longText('description');
             $table->string('type');
-            $table->string('release_year')->nullable();
-            $table->integer('imdb_rating');
+            $table->string('release_year');
+            $table->decimal('rating', 10, 1);
             $table->boolean('publish');
+            $table->boolean('feature');
             $table->boolean('member_only');
             $table->timestamps();
         });

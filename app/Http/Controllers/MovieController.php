@@ -7,7 +7,7 @@ use App\Models\Film;
 
 use Illuminate\Http\Request;
 
-class FilmController extends Controller
+class MovieController extends Controller
 {
     public function show(Film $film)
     {
@@ -16,24 +16,25 @@ class FilmController extends Controller
 
     public function create()
     {
-        return view('admin.film.create');
+        return view('admin.movie.create');
     }
 
     public function store()
     {
         // dd(request()->all());
-        $inputs = request()->validate([
+        $data = request()->validate([
             'title' => 'required',
-            'film_image' => 'nullable',
-            'genre' => 'required',
-            'description' => 'nullable',
+            'cover' => 'nullable',
+            'image' => 'nullable',
+            'description' => 'required',
             'type' => 'required',
-            'release_year' => 'nullable',
-            'imdb_rating' => 'required',
+            'release_year' => 'required',
+            'rating' => 'required',
             'publish' => 'required|boolean',
+            'feature' => 'required|boolean',
             'member_only' => 'required|boolean',
         ]);
-        auth()->user()->films()->create($inputs);
+        auth()->user()->films()->create($data);
 
         return back();
     }
