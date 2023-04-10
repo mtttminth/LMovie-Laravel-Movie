@@ -12,7 +12,7 @@
       </li><!-- End Dashboard Nav -->
       <li class="nav-heading">Film Management</li>
       <li class="nav-item">
-        <a class="nav-link" href="{{route('movies.create')}}">
+        <a class="nav-link" href="{{route('movies.index')}}">
             <i class="fa-solid fa-camera-movie"></i>
           <span>Movie</span>
         </a>

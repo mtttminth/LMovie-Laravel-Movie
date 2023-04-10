@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
