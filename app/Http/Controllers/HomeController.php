@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $films = Film::all();
+        $films = Film::with('user')->get();
         return view('home', ['films' => $films]);
     }
 }

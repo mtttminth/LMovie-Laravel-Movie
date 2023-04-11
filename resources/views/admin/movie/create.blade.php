@@ -40,11 +40,19 @@
                   {{-- <div class="col-md-4 mb-3">
                     <label for="genre" class="form-label">Genre</label>
                     <select name="genre" id="genre" class="form-select">
-                      <option value="" selected="" disabled="">Select Genre</option>
-                      <option value="action">Action</option>
-                      <option value="drama">Drama</option>
+
                     </select>
                   </div> --}}
+
+
+
+                  <select name="genres[]" id="genres" class="form-select col-md-4 mb-3" multiple aria-label="genre">
+
+                    <option selected="" disabled="">Select Genre</option>
+                    @foreach ( $genres as $genre )
+                      <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+                      @endforeach
+                  </select>
 
                   <div class="col-md-4 mb-3">
                     <label for="description" class="form-label">Description</label>

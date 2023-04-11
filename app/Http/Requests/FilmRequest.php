@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFilmRequest extends FormRequest
+class FilmRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,6 +34,7 @@ class StoreFilmRequest extends FormRequest
             'publish' => 'required|boolean',
             'feature' => 'required|boolean',
             'member_only' => 'required|boolean',
+            'genre' => 'exists:genres,id',
         ];
     }
 }
