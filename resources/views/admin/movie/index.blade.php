@@ -1,4 +1,4 @@
-@extends('masters.admin-master')
+@extends('layouts.admin')
 @section('content')
 
 <a href="{{ route('movies.create') }}" class="btn btn-primary btn-icon-text rounded-pill"><i class="fa-solid fa-plus"></i> Add new</a>

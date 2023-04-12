@@ -59,8 +59,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function films()
+    public function contents()
     {
-        return $this->hasMany(Film::class);
+        return $this->hasMany(Content::class);
     }
 }

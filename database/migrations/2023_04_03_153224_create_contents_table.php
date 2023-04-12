@@ -13,15 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('films', function (Blueprint $table) {
+        Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->string('tmdb_id')->unique()->nullable();
             $table->string('title');
+            $table->string('slug');
             $table->string('cover')->nullable();
-            $table->string('image')->nullable();
-            $table->longText('description');
-            $table->string('type');
-            $table->string('release_year');
+            $table->string('poster')->nullable();
+            $table->string('content_type');
+            $table->string('duration')->nullable();
+            $table->string('trailer')->nullable();
+            $table->string('release_date');
+            $table->text('overview');
+            $table->integer('view')->default(0);
             $table->decimal('rating', 10, 1);
             $table->boolean('publish');
             $table->boolean('feature');
@@ -37,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('films');
+        Schema::dropIfExists('contents');
     }
 };

@@ -10,10 +10,10 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      <li class="nav-heading">Film Management</li>
+      <li class="nav-heading">Content Management</li>
       <li class="nav-item">
         <a class="nav-link" href="{{route('movies.index')}}">
-            <i class="fa-solid fa-camera-movie"></i>
+            <i class="bi bi-camera-reels"></i>
           <span>Movie</span>
         </a>
       </li>

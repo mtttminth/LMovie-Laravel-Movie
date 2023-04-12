@@ -30,28 +30,28 @@
 <body>
 
   <!-- ======= Header ======= -->
-  @include('masters.admin.header')
+  @include('layouts.home-partials.header')
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  @include('masters.admin.sidebar')
+  @include('layouts.home-partials.sidebar')
   <!-- End Sidebar-->
 
+  <!-- ======= Main ======= -->
   <main id="main" class="main">
   @yield('content')
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  @include('masters.admin.footer')
+  @include('layouts.home-partials.footer')
   <!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
-  @yield('scripts')
-
+  <script type="text/javascript" src="{{asset('assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
+  <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
   <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js')}}"></script>
 
   <!-- Template Main JS File -->

@@ -1,4 +1,8 @@
-@extends('masters.admin-master')
+@extends('layouts.admin')
+
+@section('styles')
+@endsection
+
 @section('content')
 <h1>Create Movie</h1>
 
@@ -31,39 +35,40 @@
                   </div>
 
                 <div class="form-group mb-3">
-                    <label for="image" class="form-label">Image</label>
-                    <input type="text" name="image" id="image" class="form-control"
-                    placeholder="Image"
+                    <label for="poster" class="form-label">Poster</label>
+                    <input type="text" name="poster" id="poster" class="form-control"
+                    placeholder="poster"
                     aria-describedby="">
                   </div>
 
-                  {{-- <div class="col-md-4 mb-3">
+
+
+                  <div class="form-group mb-3">
                     <label for="genre" class="form-label">Genre</label>
-                    <select name="genre" id="genre" class="form-select">
-
-                    </select>
-                  </div> --}}
-
-
-
-                  <select name="genres[]" id="genres" class="form-select col-md-4 mb-3" multiple aria-label="genre">
+                  <select name="genres[]" id="genres" class="form-select col-md-4 mb-3" multiple aria-label="genres">
 
                     <option selected="" disabled="">Select Genre</option>
                     @foreach ( $genres as $genre )
-                      <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+                      <option value="{{ $genre->id }}">{{ $genre->title }}</option>
                       @endforeach
                   </select>
-
-                  <div class="col-md-4 mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="description" class="form-control" id="description" rows="3"></textarea>
                   </div>
 
-                  <input type="hidden" name="type" value="movie">
+                  @error('genres')
+                                <p class="text-danger px-2 mb-0">{{$message}}</p>
+                            @enderror
+
+                  <div class="col-md-4 mb-3">
+                    <label for="overview" class="form-label">Overview</label>
+                    <textarea name="overview" class="form-control" id="overview" rows="3"></textarea>
+                  </div>
+
+                  <input type="hidden" name="content_type" value="movie">
+
 
                   <div class="form-group mb-3">
-                    <label for="release_year" class="form-label">Release Year</label>
-                    <input type="text" name="release_year" id="release_year" class="form-control"
+                    <label for="release_date" class="form-label">Release Date</label>
+                    <input type="text" name="release_date" id="release_date" class="form-control"
                     placeholder="Release Year"
                     aria-describedby="">
                   </div>
@@ -104,4 +109,7 @@
         </div>
       </div><!-- End Bordered Tabs Justified -->
 
+@endsection
+
+@section('scripts')
 @endsection

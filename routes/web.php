@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
@@ -18,19 +19,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
-Route::get('/film', [MovieController::class, 'show'])->name('film');
+Route::get('/content', [HomeController::class, 'show'])->name('content');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.index');;
-    })->name('admin.index');
+    Route::get('/admin', [AdminDashboardController::class, 'index'])
+        ->name('admin.index');
 });
 
 Route::middleware('auth')->prefix('admin')->group(function () {
+    // Movies
     Route::resource('movies', MovieController::class);
+
+    // Genres
+    Route::get('genres/check_slug', [GenreController::class, 'check_slug'])
+        ->name('genres.checkSlug');
     Route::resource('genres', GenreController::class);
 });

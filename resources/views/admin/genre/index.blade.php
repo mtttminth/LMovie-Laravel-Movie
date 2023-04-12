@@ -1,4 +1,4 @@
-@extends('masters.admin-master')
+@extends('layouts.admin')
 @section('content')
 
 <a href="{{ route('genres.create') }}" class="btn btn-primary btn-icon-text rounded-pill"><i class="fa-solid fa-plus"></i> Add new</a>
@@ -30,7 +30,7 @@
             @foreach ($genres as $genre )
             <tr>
                 <td>{{ $genre->id }}</td>
-                <td>{{ $genre->name }}</td>
+                <td>{{ $genre->title }}</td>
               </tr>
             @endforeach
 

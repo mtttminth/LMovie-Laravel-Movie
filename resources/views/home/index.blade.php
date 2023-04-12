@@ -1,4 +1,4 @@
-@extends('masters.home-master')
+@extends('layouts.home')
 @section('content')
 <h1 class="my-4">
     Page Heading
@@ -6,25 +6,25 @@
   </h1>
 
   <!-- Blog film -->
-  @foreach ($films as $film )
+  @foreach ($contents as $content )
 
 
   <div class="card mb-4">
     <img
       class="card-img-top"
-      src="{{ $film->film_image }}"
+      src="{{ $content->image }}"
       alt="Card image cap"
     />
     <div class="card-body">
-      <h2 class="card-title">{{ $film->title }}</h2>
+      <h2 class="card-title">{{ $content->title }}</h2>
       <p class="card-text">
-        {{ Str::limit($film->body, '50', '...') }}
+        {{ Str::limit($content->description, '50', '...') }}
       </p>
-      <a href="{{route('film',$film->id)}}" class="btn btn-primary">Read More &rarr;</a>
+      <a href="{{route('content',$content->id)}}" class="btn btn-primary">Read More &rarr;</a>
     </div>
     <div class="card-footer text-muted">
-      filmed on {{ $film->created_at->diffForHumans() }}
-      <a href="#">{{ $film->user->name }}</a>
+      Released on {{ $content->created_at->diffForHumans() }}
+      <a href="#">{{ $content->user->name }}</a>
     </div>
   </div>
   @endforeach

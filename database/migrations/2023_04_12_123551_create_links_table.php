@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('film_genre', function (Blueprint $table) {
+        Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('film_id')->constrained();
-            $table->foreignId('genre_id')->constrained();
+            $table->foreignId('content_id')->constrained()->onDelete('cascade');;
+            $table->string('title')->unique();
+            $table->string('type')->unique();
+            $table->string('url')->unique();
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('film_genre');
+        Schema::dropIfExists('links');
     }
 };

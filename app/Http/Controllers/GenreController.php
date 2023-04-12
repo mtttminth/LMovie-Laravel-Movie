@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class GenreController extends Controller
 {
@@ -37,8 +38,8 @@ class GenreController extends Controller
     public function store(Request $request)
     {
         Genre::create([
-            'name' => $request->name,
-            'feature' => $request->feature,
+            'title' => $request->title,
+            'slug' => 'unique:genres',
         ]);
         return back();
     }
@@ -51,6 +52,7 @@ class GenreController extends Controller
      */
     public function show(Genre $genre)
     {
+        //
     }
 
     /**
@@ -85,5 +87,12 @@ class GenreController extends Controller
     public function destroy(Genre $genre)
     {
         //
+    }
+
+    public function check_slug(Request $request)
+    {
+        $slug = SlugService::createSlug(Genre::class, 'slug', $request->title);
+
+        return response()->json(['slug' => $slug]);
     }
 }
