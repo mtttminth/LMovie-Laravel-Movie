@@ -24,11 +24,15 @@ class ContentRequest extends FormRequest
     public function rules()
     {
         return [
+            'tmdb_id' => 'nullable',
             'title' => 'required',
+            'slug' => 'unique:contents',
             'cover' => 'nullable',
             'poster' => 'nullable',
             'overview' => 'nullable',
             'content_type' => 'required',
+            'duration' => 'nullable',
+            'trailer' => 'nullable',
             'release_date' => 'required',
             'rating' => 'required|numeric|min:0|max:10',
             'publish' => 'required|boolean',

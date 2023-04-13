@@ -32,6 +32,8 @@ Route::middleware([
 
 Route::middleware('auth')->prefix('admin')->group(function () {
     // Movies
+    Route::get('movies/check_slug', [MovieController::class, 'check_slug'])
+        ->name('movies.checkSlug');
     Route::resource('movies', MovieController::class);
 
     // Genres

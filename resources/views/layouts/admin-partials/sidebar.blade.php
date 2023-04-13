@@ -19,7 +19,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{route('genres.index')}}">
-            <i class="fa-solid fa-film"></i>
+            <i class="bi bi-tags"></i>
           <span>Genre</span>
         </a>
       </li>
