@@ -22,6 +22,11 @@ class Content extends Model
         return $this->belongsToMany(Genre::class);
     }
 
+    public function links()
+    {
+        return $this->hasMany(Link::class);
+    }
+
     public function sluggable(): array
     {
         return [

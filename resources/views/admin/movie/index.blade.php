@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-<a href="{{ route('movies.create') }}" class="btn btn-primary btn-icon-text rounded-pill"><i class="fa-solid fa-plus"></i> Add new</a>
+<a href="{{ route('movies.create') }}" class="btn btn-primary mb-3"><i class="bi bi-plus"></i>Add new</a>
 
 <div class="col-12">
 
