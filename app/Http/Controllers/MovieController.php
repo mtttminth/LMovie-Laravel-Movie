@@ -6,6 +6,7 @@ use App\Http\Requests\ContentRequest;
 use App\Models\Content;
 use App\Models\Genre;
 use App\Models\Link;
+use App\Services\ContentService;
 use Illuminate\Http\Request;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -29,30 +30,16 @@ class MovieController extends Controller
         return view('admin.movie.create', ['genres' => $genres]);
     }
 
-    public function store(ContentRequest $request)
+    public function store(ContentRequest $request, ContentService $contentService)
     {
-        // dd($request);
-        // The incoming request is valid...
+        $contentData = new Content($request->safe()->except('genres', 'view', 'link_services', 'link_types', 'link_urls'));
 
-        // Retrieve the validated input data...
-        // $content = $request->validated();
+        $genres = $request->genres;
 
-        // Retrieve a portion of the validated input data...
-        $content = new Content($request->safe()->except('genres', 'view', 'services', 'link_types', 'link_urls'));
-        auth()->user()->contents()->save($content);
+        $contentLinks = new Link($request->safe()->only('link_services', 'link_types', 'link_urls'));
 
-        $content->genres()->attach(request('genres'));
-
-        // Add Link to Movie
-        $currentMovie = Content::find($content->id);
-
-        foreach ($request->link_urls as $key => $link_url) {
-            $link = new Link();
-            $link->service = $request->services[$key];
-            $link->link_type = $request->link_types[$key];
-            $link->link_url = $request->link_urls[$key];
-            $currentMovie->links()->save($link);
-        }
+        //Store Movie, Attach Genres && Add Links
+        $contentService->storeContent($contentData, $genres, $contentLinks);
 
         return back();
     }

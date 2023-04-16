@@ -127,7 +127,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><select name="services[]" class="form-select"
+                                            <td><select name="link_services[]" class="form-select"
                                                     aria-label="Choose Service">
                                                     <option>StreamSB</option>
                                                     <option>StreamDD</option>

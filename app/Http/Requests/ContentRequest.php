@@ -39,7 +39,7 @@ class ContentRequest extends FormRequest
             'feature' => 'required|boolean',
             'member_only' => 'required|boolean',
             'genres' => 'required|exists:genres,id',
-            'services' => 'nullable',
+            'link_services' => 'nullable',
             'link_types' => 'nullable',
             'link_urls' => 'nullable',
         ];
