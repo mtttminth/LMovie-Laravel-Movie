@@ -8,14 +8,15 @@
 @endsection
 
 @section('content')
-    <h1>Create Movie</h1>
+    <h1>Edit Movie</h1>
 
     @include('components.alerts')
 
     <div class="container">
 
-        <form action="{{ route('movies.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('movies.update', $movie->id) }}" method="post" enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
 
             <div class="row gx-xl-4 h-100 justify-content-center">
                 <div class="col-lg">
@@ -39,26 +40,26 @@
                             aria-labelledby="general-tab">
 
                             <div class="form-floating mb-3">
-                                <input type="text" name="title" id="title" class="form-control" placeholder="Title"
-                                    aria-describedby="">
+                                <input type="text" name="title" id="title"
+                                    value="{{ $movie->title }}"class="form-control" placeholder="Title" aria-describedby="">
                                 <label for="title" class="form-label">Title</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" name="slug" id="slug" class="form-control" placeholder="Slug"
-                                    aria-describedby="">
+                                <input type="text" name="slug" id="slug" value="{{ $movie->slug }}"
+                                    class="form-control" placeholder="Slug" aria-describedby="">
                                 <label for="slug" class="form-label">Slug</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" name="cover" id="cover" class="form-control" placeholder="Cover"
-                                    aria-describedby="">
+                                <input type="text" name="cover" id="cover" value="{{ $movie->cover }}"
+                                    class="form-control" placeholder="Cover" aria-describedby="">
                                 <label for="cover" class="form-label">Cover</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" name="poster" id="poster" class="form-control"
-                                    placeholder="poster" aria-describedby="">
+                                <input type="text" name="poster" id="poster" value="{{ $movie->poster }}"
+                                    class="form-control" placeholder="poster" aria-describedby="">
                                 <label for="poster" class="form-label">Poster</label>
                             </div>
 
@@ -67,13 +68,14 @@
                                 <select name="genres[]" id="genres" class="form-select col-md-4 mb-3" multiple
                                     data-placeholder="Select genres">
                                     @foreach ($genres as $genre)
-                                        <option value="{{ $genre->id }}">{{ $genre->title }}</option>
+                                        <option value="{{ $genre->id }}" {{ $movie->genres->contains($genre->id) ? 'selected' : '' }}>{{ $genre->title }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <textarea name="overview" class="form-control" id="overview"style="height: 100px"></textarea>
+                                <textarea name="overview" class="form-control" id="overview"style="height: 100px">{{ $movie->overview ?? '' }}</textarea>
                                 <label for="overview" class="form-label">Overview</label>
                             </div>
 
@@ -81,7 +83,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="release_date" id="release_date" class="form-control"
+                                        <input type="text" name="release_date" id="release_date" value="{{ $movie->release_date }}" class="form-control"
                                             placeholder="Release Year" aria-describedby="">
                                         <label for="release_date" class="form-label">Release Date</label>
                                     </div>
@@ -90,7 +92,7 @@
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
                                         <input type="number" step=".1" min="0" max="10"
-                                            name="rating" id="rating" class="form-control" placeholder="0.0"
+                                            name="rating" id="rating" value="{{ $movie->rating }}" class="form-control" placeholder="0.0"
                                             aria-describedby="">
                                         <label for="rating" class="form-label">Rating</label>
                                     </div>
@@ -98,7 +100,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="duration" id="duration" class="form-control"
+                                        <input type="text" name="duration" id="duration" value="{{ $movie->duration }}" class="form-control"
                                             placeholder="duration" aria-describedby="">
                                         <label for="duration" class="form-label">Duration</label>
                                     </div>
@@ -106,7 +108,7 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" name="trailer" id="trailer" class="form-control"
+                                <input type="text" name="trailer" id="trailer" value="{{ $movie->trailer }}" class="form-control"
                                     placeholder="trailer" aria-describedby="">
                                 <label for="trailer" class="form-label">Trailer</label>
                             </div>

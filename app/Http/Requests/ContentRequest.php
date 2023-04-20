@@ -24,7 +24,7 @@ class ContentRequest extends FormRequest
     public function rules()
     {
         return [
-            'tmdb_id' => 'nullable',
+            'tmdb_id' => 'unique:contents|nullable',
             'title' => 'required',
             'slug' => 'unique:contents',
             'cover' => 'nullable',
@@ -43,5 +43,10 @@ class ContentRequest extends FormRequest
             'link_types' => 'nullable',
             'link_urls' => 'nullable',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([]);
     }
 }

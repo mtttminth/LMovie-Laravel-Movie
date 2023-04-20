@@ -21,7 +21,7 @@
 @section('scripts')
 <script>
     $('#title').change(function(e) {
-      $.get('{{ route('genres.checkSlug') }}',
+      $.get('{{ route('genres.check_slug') }}',
         { 'title': $(this).val() },
         function( data ) {
           $('#slug').val(data.slug);

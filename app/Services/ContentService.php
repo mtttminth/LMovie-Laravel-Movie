@@ -8,12 +8,8 @@ use App\Models\Link;
 class ContentService
 {
 
-    public function storeContent($contentData, array $genres, $contentLinks): Content
+    public function storeLink($content, $contentLinks): void
     {
-        $content = auth()->user()->contents()->save($contentData);
-
-        $content->genres()->attach($genres);
-
         foreach ($contentLinks->link_urls as $key => $link_url) {
             $link = new Link();
             $link->link_service = $contentLinks->link_services[$key];
@@ -21,6 +17,5 @@ class ContentService
             $link->link_url = $contentLinks->link_urls[$key];
             $content->links()->save($link);
         }
-        return $content;
     }
 }

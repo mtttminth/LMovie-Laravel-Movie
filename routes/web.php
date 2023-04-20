@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SlugController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,13 +32,15 @@ Route::middleware([
 });
 
 Route::middleware('auth')->prefix('admin')->group(function () {
+    //Check Slug
+    Route::get('movies/check_slug', [SlugController::class, 'checkMovieSlug'])
+        ->name('movies.check_slug');
+    Route::get('genres/check_slug', [SlugController::class, 'checkGenreSlug'])
+        ->name('genres.check_slug');
+
     // Movies
-    Route::get('movies/check_slug', [MovieController::class, 'check_slug'])
-        ->name('movies.checkSlug');
     Route::resource('movies', MovieController::class);
 
     // Genres
-    Route::get('genres/check_slug', [GenreController::class, 'check_slug'])
-        ->name('genres.checkSlug');
     Route::resource('genres', GenreController::class);
 });

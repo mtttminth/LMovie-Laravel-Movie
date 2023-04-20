@@ -7,8 +7,6 @@ use App\Models\Content;
 use App\Models\Genre;
 use App\Models\Link;
 use App\Services\ContentService;
-use Illuminate\Http\Request;
-use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class MovieController extends Controller
 {
@@ -32,21 +30,56 @@ class MovieController extends Controller
 
     public function store(ContentRequest $request, ContentService $contentService)
     {
-        $contentData = new Content($request->safe()->except('genres', 'view', 'link_services', 'link_types', 'link_urls'));
-
-        $genres = $request->genres;
-
         $contentLinks = new Link($request->safe()->only('link_services', 'link_types', 'link_urls'));
 
-        //Store Movie, Attach Genres && Add Links
-        $contentService->storeContent($contentData, $genres, $contentLinks);
+        $content = auth()->user()->contents()->create($request->safe()->except('genres', 'view', 'link_services', 'link_types', 'link_urls'));
+        $content->genres()->attach($request->genres);
+        $contentService->storeLink($content, $contentLinks);
+
+        session()->flash('movie-created-message', $content['title'] . ' created');
 
         return back();
     }
 
-    public function check_slug(Request $request)
+    public function edit(Content $movie)
     {
-        $slug = SlugService::createSlug(Content::class, 'slug', $request->title);
-        return response()->json(['slug' => $slug]);
+        $genres = Genre::all();
+        return view('admin.movie.edit', ['movie' => $movie, 'genres' => $genres]);
+    }
+
+    public function update(Content $movie)
+    {
+        $inputs = request()->validate([
+            'title' => 'required|min:8|max:255',
+            'post_image' => 'file',
+            'body' => 'required'
+        ]);
+        if (request('post_image')) {
+            $inputs['post_image'] = request('post_image')->store('images');
+            $post->post_image = $inputs['post_image'];
+        }
+        $post->title = $inputs['title'];
+        $post->body = $inputs['body'];
+
+        //authorization policy
+        $this->authorize('update', $post);
+
+        $post->update();
+
+        session()->flash('post-updated-message', $inputs['title'] . ' was updated');
+
+        return redirect()->route('post.index');
+    }
+
+
+    public function destroy(Post $post, Request $request)
+    {
+        //authorization policy
+        $this->authorize('delete', $post);
+        $post->delete();
+
+        $request->session()->flash('post-deleted-message', $post['title'] . ' was deleted');
+
+        return back();
     }
 }
