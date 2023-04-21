@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContentRequest extends FormRequest
+class StoreContentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -43,10 +43,5 @@ class ContentRequest extends FormRequest
             'link_types' => 'nullable',
             'link_urls' => 'nullable',
         ];
-    }
-
-    public function prepareForValidation()
-    {
-        $this->merge([]);
     }
 }

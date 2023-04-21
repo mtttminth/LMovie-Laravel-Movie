@@ -33,7 +33,7 @@
                         <tr>
                             <td>{{ $movie->id }}</td>
                             <td class="d-flex">
-                                <a href="{{ route('movies.edit', $movie->id) }}">
+                                <a href="{{ route('movies.edit', $movie->slug) }}">
                                     <div class="w-lg-50px">
                                         <picture>
                                         <img src="{{ $movie->cover }}"alt=""
@@ -42,7 +42,7 @@
                                         </picture>
                                     </div>
                                 </a>
-                                <a href="{{ route('movies.edit', $movie->id) }}">
+                                <a href="{{ route('movies.edit', $movie->slug) }}">
                                     <div class="ps-4 lh-sm py-2">
                                         {{ $movie->title }}
                                     </div>

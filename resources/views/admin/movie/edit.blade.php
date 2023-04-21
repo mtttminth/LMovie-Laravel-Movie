@@ -14,7 +14,7 @@
 
     <div class="container">
 
-        <form action="{{ route('movies.update', $movie->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('movies.update', $movie->slug) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
 
@@ -44,6 +44,9 @@
                                     value="{{ $movie->title }}"class="form-control" placeholder="Title" aria-describedby="">
                                 <label for="title" class="form-label">Title</label>
                             </div>
+                            @error('title')
+                                <p class="text-danger px-2 mb-0">{{$message}}</p>
+                            @enderror
 
                             <div class="form-floating mb-3">
                                 <input type="text" name="slug" id="slug" value="{{ $movie->slug }}"
@@ -68,11 +71,15 @@
                                 <select name="genres[]" id="genres" class="form-select col-md-4 mb-3" multiple
                                     data-placeholder="Select genres">
                                     @foreach ($genres as $genre)
-                                        <option value="{{ $genre->id }}" {{ $movie->genres->contains($genre->id) ? 'selected' : '' }}>{{ $genre->title }}
+                                        <option value="{{ $genre->id }}"
+                                            {{ $movie->genres->contains($genre->id) ? 'selected' : '' }}>{{ $genre->title }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
+                            @error('genres')
+                                <p class="text-danger px-2 mb-0">{{$message}}</p>
+                            @enderror
 
                             <div class="form-floating mb-3">
                                 <textarea name="overview" class="form-control" id="overview"style="height: 100px">{{ $movie->overview ?? '' }}</textarea>
@@ -83,7 +90,8 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="release_date" id="release_date" value="{{ $movie->release_date }}" class="form-control"
+                                        <input type="text" name="release_date" id="release_date"
+                                            value="{{ $movie->release_date }}" class="form-control"
                                             placeholder="Release Year" aria-describedby="">
                                         <label for="release_date" class="form-label">Release Date</label>
                                     </div>
@@ -92,24 +100,25 @@
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
                                         <input type="number" step=".1" min="0" max="10"
-                                            name="rating" id="rating" value="{{ $movie->rating }}" class="form-control" placeholder="0.0"
-                                            aria-describedby="">
+                                            name="rating" id="rating" value="{{ $movie->rating }}"
+                                            class="form-control" placeholder="0.0" aria-describedby="">
                                         <label for="rating" class="form-label">Rating</label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="duration" id="duration" value="{{ $movie->duration }}" class="form-control"
-                                            placeholder="duration" aria-describedby="">
+                                        <input type="text" name="duration" id="duration"
+                                            value="{{ $movie->duration }}" class="form-control" placeholder="duration"
+                                            aria-describedby="">
                                         <label for="duration" class="form-label">Duration</label>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" name="trailer" id="trailer" value="{{ $movie->trailer }}" class="form-control"
-                                    placeholder="trailer" aria-describedby="">
+                                <input type="text" name="trailer" id="trailer" value="{{ $movie->trailer }}"
+                                    class="form-control" placeholder="trailer" aria-describedby="">
                                 <label for="trailer" class="form-label">Trailer</label>
                             </div>
                         </div>
@@ -129,26 +138,41 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td><select name="link_services[]" class="form-select"
-                                                    aria-label="Choose Service">
-                                                    <option>StreamSB</option>
-                                                    <option>StreamDD</option>
-                                                    <option>WorkUpload</option>
-                                                </select></td>
-                                            <td><select name="link_types[]" class="form-select" aria-label="Choose Type">
-                                                    <option>Free</option>
-                                                    <option>Premium</option>
-                                                    <option>Download</option>
-                                                </select></td>
-                                            <td><input name="link_urls[]" class="form-control" type="text"
-                                                    placeholder="URL" aria-label="default input example"></td>
-                                            <td>
-                                                <button class="btn btn-danger removeEvent my-3"><i
-                                                        class="bi bi-dash-circle-dotted"></i></button>
-                                            </td>
-                                        </tr>
-
+                                        @foreach ($links as $link)
+                                            <tr>
+                                                <td><select name="link_services[]" class="form-select"
+                                                        aria-label="Choose Service">
+                                                        <option value="StreamSB"
+                                                            {{ $link->link_service == 'StreamSB' ? 'selected' : '' }}>
+                                                            StreamSB</option>
+                                                        <option
+                                                            value="StreamDD"{{ $link->link_service == 'StreamDD' ? 'selected' : '' }}>
+                                                            StreamDD</option>
+                                                        <option
+                                                            value="WorkUpload"{{ $link->link_service == 'WorkUpload' ? 'selected' : '' }}>
+                                                            WorkUpload</option>
+                                                    </select></td>
+                                                <td><select name="link_types[]" class="form-select"
+                                                        aria-label="Choose Type">
+                                                        <option
+                                                            value="Free"{{ $link->link_type == 'Free' ? 'selected' : '' }}>
+                                                            Free</option>
+                                                        <option
+                                                            value="Premium"{{ $link->link_type == 'Premium' ? 'selected' : '' }}>
+                                                            Premium</option>
+                                                        <option
+                                                            value="Download"{{ $link->link_type == 'Download' ? 'selected' : '' }}>
+                                                            Download</option>
+                                                    </select></td>
+                                                <td><input name="link_urls[]" value="{{ $link->link_url }}"
+                                                        class="form-control" type="text" placeholder="URL"
+                                                        aria-label="default input example"></td>
+                                                <td>
+                                                    <button class="btn btn-danger removeEvent my-3"><i
+                                                            class="bi bi-dash-circle-dotted"></i></button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -160,35 +184,36 @@
                 <div class="col-xl-auto">
                     <div class="mb-3">
                         <label class="form-label fs-xs" for="tmdb_id">tmDB Importer</label>
-                        <input name="tmdb_id" class="form-control" type="number" id="tmdb_id"
+                        <input name="tmdb_id" value="{{$movie->tmdb_id}}" class="form-control" type="number" id="tmdb_id"
                             placeholder="tmDB or iMDB id">
                     </div>
 
                     <label class="form-label">Advanced</label>
                     <div class="form-check form-switch mb-3">
                         <input type="hidden" name="publish" value="0">
-                        <input name="publish" class="form-check-input" value="1" type="checkbox" role="switch"
-                            id="publish">
+                        <input name="publish" class="form-check-input" value="1"
+                            {{ $movie->publish ? 'checked' : '' }} type="checkbox" role="switch" id="publish">
                         <label class="form-check-label" for="publish">Publish</label>
                     </div>
 
                     <div class="form-check form-switch mb-3">
                         <input type="hidden" name="feature" value="0">
-                        <input name="feature" class="form-check-input" value="1" type="checkbox" role="switch"
-                            id="feature">
+                        <input name="feature" class="form-check-input" value="1"
+                            {{ $movie->feature ? 'checked' : '' }} type="checkbox" role="switch" id="feature">
                         <label class="form-check-label" for="feature">Feature</label>
                     </div>
 
                     <div class="form-check form-switch mb-3">
                         <input type="hidden" name="member_only" value="0">
-                        <input type="checkbox" name="member_only" value="1" class="form-check-input"
-                            role="switch" id="member_only">
+                        <input type="checkbox" name="member_only" value="1"
+                            {{ $movie->member_only ? 'checked' : '' }} class="form-check-input" role="switch"
+                            id="member_only">
                         <label class="form-check-label" for="member_only">Member Only</label>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    </div.column>
                 </div>
+            </div>
         </form>
     </div>
 @endsection

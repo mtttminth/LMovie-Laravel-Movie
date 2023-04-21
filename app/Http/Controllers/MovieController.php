@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ContentRequest;
+use App\Http\Requests\StoreContentRequest;
+use App\Http\Requests\UpdateContentRequest;
 use App\Models\Content;
 use App\Models\Genre;
 use App\Models\Link;
@@ -28,11 +29,11 @@ class MovieController extends Controller
         return view('admin.movie.create', ['genres' => $genres]);
     }
 
-    public function store(ContentRequest $request, ContentService $contentService)
+    public function store(StoreContentRequest $request, ContentService $contentService)
     {
-        $contentLinks = new Link($request->safe()->only('link_services', 'link_types', 'link_urls'));
+        $contentLinks = new Link($request->safe()->only(['link_services', 'link_types', 'link_urls']));
 
-        $content = auth()->user()->contents()->create($request->safe()->except('genres', 'view', 'link_services', 'link_types', 'link_urls'));
+        $content = auth()->user()->contents()->create($request->safe()->except(['genres', 'view', 'link_services', 'link_types', 'link_urls']));
         $content->genres()->attach($request->genres);
         $contentService->storeLink($content, $contentLinks);
 
@@ -44,42 +45,32 @@ class MovieController extends Controller
     public function edit(Content $movie)
     {
         $genres = Genre::all();
-        return view('admin.movie.edit', ['movie' => $movie, 'genres' => $genres]);
+        $links = Link::where('content_id', $movie->id)->get();
+        return view('admin.movie.edit', ['movie' => $movie, 'genres' => $genres, 'links' => $links]);
     }
 
-    public function update(Content $movie)
+    public function update(UpdateContentRequest $request, ContentService $contentService, Content $movie)
     {
-        $inputs = request()->validate([
-            'title' => 'required|min:8|max:255',
-            'post_image' => 'file',
-            'body' => 'required'
-        ]);
-        if (request('post_image')) {
-            $inputs['post_image'] = request('post_image')->store('images');
-            $post->post_image = $inputs['post_image'];
-        }
-        $post->title = $inputs['title'];
-        $post->body = $inputs['body'];
+        $contentLinks = new Link($request->safe()->only(['link_services', 'link_types', 'link_urls']));
 
-        //authorization policy
-        $this->authorize('update', $post);
+        $movie->update($request->safe()->except(['genres', 'view', 'link_services', 'link_types', 'link_urls']));
+        $movie->genres()->sync($request->genres);
+        $contentService->updateLink($movie, $contentLinks);
 
-        $post->update();
+        session()->flash('movie-updated-message', $movie['title'] . ' updated');
 
-        session()->flash('post-updated-message', $inputs['title'] . ' was updated');
-
-        return redirect()->route('post.index');
+        return redirect()->route('movies.index');
     }
 
 
-    public function destroy(Post $post, Request $request)
-    {
-        //authorization policy
-        $this->authorize('delete', $post);
-        $post->delete();
+    // public function destroy(Content $movie, Request $request)
+    // {
+    //     //authorization policy
+    //     $this->authorize('delete', $movie);
+    //     $movie->delete();
 
-        $request->session()->flash('post-deleted-message', $post['title'] . ' was deleted');
+    //     $request->session()->flash('movie-deleted-message', $movie['title'] . ' was deleted');
 
-        return back();
-    }
+    //     return back();
+    // }
 }

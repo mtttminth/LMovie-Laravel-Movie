@@ -18,14 +18,14 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('tmdb_id')->unique()->nullable();
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('cover')->nullable();
             $table->string('poster')->nullable();
             $table->string('content_type');
             $table->string('duration')->nullable();
             $table->string('trailer')->nullable();
             $table->string('release_date');
-            $table->text('overview');
+            $table->text('overview')->nullable();
             $table->integer('view')->default(0);
             $table->decimal('rating', 10, 1);
             $table->boolean('publish');
