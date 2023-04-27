@@ -44,7 +44,7 @@
                                     value="{{ $movie->title }}"class="form-control" placeholder="Title" aria-describedby="">
                                 <label for="title" class="form-label">Title</label>
                                 @error('title')
-                                    <p class="text-danger px-2 mb-0">{{$message}}</p>
+                                    <p class="text-danger px-2 mb-0">{{ $message }}</p>
                                 @enderror
                             </div>
 
@@ -53,8 +53,8 @@
                                     class="form-control" placeholder="Slug" aria-describedby="">
                                 <label for="slug" class="form-label">Slug</label>
                                 @error('slug')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-floating mb-3">
@@ -62,8 +62,8 @@
                                     class="form-control" placeholder="Cover" aria-describedby="">
                                 <label for="cover" class="form-label">Cover</label>
                                 @error('cover')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-floating mb-3">
@@ -71,8 +71,8 @@
                                     class="form-control" placeholder="poster" aria-describedby="">
                                 <label for="poster" class="form-label">Poster</label>
                                 @error('poster')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group mb-3">
@@ -81,21 +81,22 @@
                                     data-placeholder="Select genres">
                                     @foreach ($genres as $genre)
                                         <option value="{{ $genre->id }}"
-                                            {{ $movie->genres->contains($genre->id) ? 'selected' : '' }}>{{ $genre->title }}
+                                            {{ $movie->genres->contains($genre->id) ? 'selected' : '' }}>
+                                            {{ $genre->title }}
                                         </option>
                                     @endforeach
                                 </select>
                                 @error('genres')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-floating mb-3">
                                 <textarea name="overview" class="form-control" id="overview"style="height: 100px">{{ $movie->overview ?? '' }}</textarea>
                                 <label for="overview" class="form-label">Overview</label>
                                 @error('overview')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <input type="hidden" name="content_type" value="movie">
@@ -107,8 +108,8 @@
                                             placeholder="Release Year" aria-describedby="">
                                         <label for="release_date" class="form-label">Release Date</label>
                                         @error('release_date')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -119,8 +120,8 @@
                                             class="form-control" placeholder="0.0" aria-describedby="">
                                         <label for="rating" class="form-label">Rating</label>
                                         @error('rating')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -131,8 +132,8 @@
                                             aria-describedby="">
                                         <label for="duration" class="form-label">Duration</label>
                                         @error('duration')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -142,8 +143,8 @@
                                     class="form-control" placeholder="trailer" aria-describedby="">
                                 <label for="trailer" class="form-label">Trailer</label>
                                 @error('trailer')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -208,8 +209,8 @@
                 <div class="col-xl-auto">
                     <div class="mb-3">
                         <label class="form-label fs-xs" for="tmdb_id">tmDB Importer</label>
-                        <input name="tmdb_id" value="{{$movie->tmdb_id}}" class="form-control" type="number" id="tmdb_id"
-                            placeholder="tmDB or iMDB id">
+                        <input name="tmdb_id" value="{{ $movie->tmdb_id }}" class="form-control" type="number"
+                            id="tmdb_id" placeholder="tmDB or iMDB id">
                     </div>
 
                     <label class="form-label">Advanced</label>
@@ -242,7 +243,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <!-- Genres Multi Select -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -288,4 +289,4 @@
 
         });
     </script>
-@endsection
+@endpush

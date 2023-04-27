@@ -70,7 +70,7 @@
 @endsection
 
 
-@section('scripts')
+@push('scripts')
     <script type="text/javascript" src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
-@endsection
+@endpush

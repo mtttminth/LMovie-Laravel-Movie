@@ -18,7 +18,7 @@
     </form>
 @endsection
 
-@section('scripts')
+@push('scripts')
 <script>
     $('#title').change(function(e) {
       $.get('{{ route('genres.check_slug') }}',
@@ -28,4 +28,4 @@
         });
     });
   </script>
-@endsection
+@endpush

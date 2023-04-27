@@ -61,7 +61,7 @@
   <!-- Template Main JS File -->
   <script type="text/javascript" src="{{asset('assets/js/main.js')}}"></script>
 
-  @yield('scripts')
+  @stack('scripts')
 
 </body>
 
