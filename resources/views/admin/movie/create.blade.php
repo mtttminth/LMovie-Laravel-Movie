@@ -42,24 +42,36 @@
                                 <input type="text" name="title" id="title" class="form-control" placeholder="Title"
                                     aria-describedby="">
                                 <label for="title" class="form-label">Title</label>
+                                @error('title')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-floating mb-3">
                                 <input type="text" name="slug" id="slug" class="form-control" placeholder="Slug"
                                     aria-describedby="">
                                 <label for="slug" class="form-label">Slug</label>
+                                @error('slug')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-floating mb-3">
                                 <input type="text" name="cover" id="cover" class="form-control" placeholder="Cover"
                                     aria-describedby="">
                                 <label for="cover" class="form-label">Cover</label>
+                                @error('cover')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-floating mb-3">
                                 <input type="text" name="poster" id="poster" class="form-control"
                                     placeholder="poster" aria-describedby="">
                                 <label for="poster" class="form-label">Poster</label>
+                                @error('poster')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group mb-3">
@@ -70,11 +82,17 @@
                                         <option value="{{ $genre->id }}">{{ $genre->title }}</option>
                                     @endforeach
                                 </select>
+                                @error('genres')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-floating mb-3">
                                 <textarea name="overview" class="form-control" id="overview"style="height: 100px"></textarea>
                                 <label for="overview" class="form-label">Overview</label>
+                                @error('overview')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <input type="hidden" name="content_type" value="movie">
@@ -84,6 +102,9 @@
                                         <input type="text" name="release_date" id="release_date" class="form-control"
                                             placeholder="Release Year" aria-describedby="">
                                         <label for="release_date" class="form-label">Release Date</label>
+                                        @error('release_date')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -93,6 +114,9 @@
                                             name="rating" id="rating" class="form-control" placeholder="0.0"
                                             aria-describedby="">
                                         <label for="rating" class="form-label">Rating</label>
+                                        @error('rating')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -101,6 +125,9 @@
                                         <input type="text" name="duration" id="duration" class="form-control"
                                             placeholder="duration" aria-describedby="">
                                         <label for="duration" class="form-label">Duration</label>
+                                        @error('duration')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -109,6 +136,9 @@
                                 <input type="text" name="trailer" id="trailer" class="form-control"
                                     placeholder="trailer" aria-describedby="">
                                 <label for="trailer" class="form-label">Trailer</label>
+                                @error('trailer')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -185,8 +215,8 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
                 </div>
+            </div>
         </form>
     </div>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateContentRequest extends FormRequest
@@ -26,7 +27,7 @@ class UpdateContentRequest extends FormRequest
         return [
             'tmdb_id' => 'nullable',
             'title' => 'required',
-            'slug' => 'required',
+            'slug' => ['required', Rule::unique('contents')->ignore($this->movie->id)],
             'cover' => 'nullable',
             'poster' => 'nullable',
             'overview' => 'nullable',

@@ -49,11 +49,11 @@
                                 </a>
                             </td>
                             <td>
-                                <form action="{{ route('movies.destroy', $movie->id) }}" method="post"
+                                <form action="{{ route('movies.destroy', $movie->slug) }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>

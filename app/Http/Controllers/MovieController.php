@@ -8,6 +8,7 @@ use App\Models\Content;
 use App\Models\Genre;
 use App\Models\Link;
 use App\Services\ContentService;
+use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
@@ -63,14 +64,13 @@ class MovieController extends Controller
     }
 
 
-    // public function destroy(Content $movie, Request $request)
-    // {
-    //     //authorization policy
-    //     $this->authorize('delete', $movie);
-    //     $movie->delete();
+    public function destroy(Content $movie, Request $request)
+    {
+        $movie->genres()->detach();
+        $movie->delete();
 
-    //     $request->session()->flash('movie-deleted-message', $movie['title'] . ' was deleted');
+        $request->session()->flash('movie-deleted-message', $movie['title'] . ' was deleted');
 
-    //     return back();
-    // }
+        return back();
+    }
 }
