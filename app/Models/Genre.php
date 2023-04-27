@@ -12,12 +12,16 @@ class Genre extends Model
 
     protected $fillable = [
         'title',
-        'feature'
     ];
 
     public function contents()
     {
         return $this->belongsToMany(Content::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
     public function sluggable(): array

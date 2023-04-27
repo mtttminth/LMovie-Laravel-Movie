@@ -39,7 +39,6 @@ class MovieController extends Controller
         $contentService->storeLink($content, $contentLinks);
 
         session()->flash('movie-created-message', $content['title'] . ' created');
-
         return back();
     }
 
@@ -52,14 +51,13 @@ class MovieController extends Controller
 
     public function update(UpdateContentRequest $request, ContentService $contentService, Content $movie)
     {
-        $contentLinks = new Link($request->safe()->only(['link_services', 'link_types', 'link_urls']));
-
         $movie->update($request->safe()->except(['genres', 'view', 'link_services', 'link_types', 'link_urls']));
         $movie->genres()->sync($request->genres);
+
+        $contentLinks = new Link($request->safe()->only(['link_services', 'link_types', 'link_urls']));
         $contentService->updateLink($movie, $contentLinks);
 
         session()->flash('movie-updated-message', $movie['title'] . ' updated');
-
         return redirect()->route('movies.index');
     }
 
@@ -70,7 +68,6 @@ class MovieController extends Controller
         $movie->delete();
 
         $request->session()->flash('movie-deleted-message', $movie['title'] . ' was deleted');
-
         return back();
     }
 }

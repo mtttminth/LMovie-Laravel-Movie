@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GenreRequest;
+use App\Http\Requests\StoreGenreRequest;
+use App\Http\Requests\UpdateGenreRequest;
 use App\Models\Genre;
-use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
@@ -35,21 +35,11 @@ class GenreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(GenreRequest $request)
+    public function store(StoreGenreRequest $request)
     {
-        Genre::create($request->validated());
+        $genre = Genre::create($request->validated());
+        session()->flash('movie-created-message', $genre['title'] . ' created');
         return back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Genre  $genre
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Genre $genre)
-    {
-        //
     }
 
     /**
@@ -60,7 +50,7 @@ class GenreController extends Controller
      */
     public function edit(Genre $genre)
     {
-        //
+        return view('admin.genre.edit', compact('genre'));
     }
 
     /**
@@ -70,9 +60,11 @@ class GenreController extends Controller
      * @param  \App\Models\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Genre $genre)
+    public function update(UpdateGenreRequest $request, Genre $genre)
     {
-        //
+        $genre->update($request->validated());
+        session()->flash('genre-updated-message', $genre['title'] . ' updated');
+        return redirect()->route('genres.index');
     }
 
     /**
@@ -83,6 +75,9 @@ class GenreController extends Controller
      */
     public function destroy(Genre $genre)
     {
-        //
+        $genre->contents()->detach();
+        $genre->delete();
+        session()->flash('genre-deleted-message', $genre['title'] . ' was deleted');
+        return back();
     }
 }

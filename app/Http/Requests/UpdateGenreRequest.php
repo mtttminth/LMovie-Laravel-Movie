@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class GenreRequest extends FormRequest
+class UpdateGenreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +26,7 @@ class GenreRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'slug' => 'unique:genres',
+            'slug' => ['required', Rule::unique('genres')->ignore($this->genre->id)],
         ];
     }
 }

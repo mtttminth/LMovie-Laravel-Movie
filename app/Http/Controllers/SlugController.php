@@ -18,7 +18,6 @@ class SlugController extends Controller
     public function checkGenreSlug(Request $request)
     {
         $slug = SlugService::createSlug(Genre::class, 'slug', $request->title);
-
         return response()->json(['slug' => $slug]);
     }
 }
