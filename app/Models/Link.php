@@ -10,8 +10,13 @@ class Link extends Model
     use HasFactory;
 
     protected $fillable = [
-        'link_services',
-        'link_types',
-        'link_urls',
+        'link_provider',
+        'link_type',
+        'link_url',
     ];
+
+    public function content()
+    {
+        return $this->belongsTo(Content::class);
+    }
 }

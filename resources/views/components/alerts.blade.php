@@ -28,6 +28,19 @@
     <div class="alert alert-success">{{ session('genre-updated-message') }}</div>
 @endif
 
+{{-- Genre Alert --}}
+@if (session('link_provider-created-message'))
+    <div class="alert alert-success">{{ session('link_provider-created-message') }}</div>
+@endif
+
+@if (session('link_provider-deleted-message'))
+    <div class="alert alert-danger">{{ session('link_provider-deleted-message') }}</div>
+@endif
+
+@if (session('link_provider-updated-message'))
+    <div class="alert alert-success">{{ session('link_provider-updated-message') }}</div>
+@endif
+
 {{-- USER Alert --}}
 @if (session('user-updated'))
     <div class="alert alert-success">{{ session('user-updated') }}</div>

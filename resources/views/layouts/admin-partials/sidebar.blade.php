@@ -23,6 +23,12 @@
           <span>Genre</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('link_providers.index')}}">
+            <i class="bi bi-tags"></i>
+          <span>Link Provider</span>
+        </a>
+      </li>
 
       <li class="nav-item">
         <a class="nav-link" href="">

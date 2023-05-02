@@ -2,7 +2,7 @@
 @section('content')
 @include('components.alerts')
 
-    <a href="{{ route('genres.create') }}" class="btn btn-primary mb-3"><i class="bi bi-plus"></i>Add new</a>
+    <a href="{{ route('link_providers.create') }}" class="btn btn-primary mb-3"><i class="bi bi-plus"></i>Add new</a>
 
     <div class="col-12">
 
@@ -20,7 +20,7 @@
             </div>
 
             <!-- Genres Datatables -->
-            @if ($genres->isNotEmpty())
+            @if ($link_providers->isNotEmpty())
                 <table class="table table-borderless datatable">
                     <thead>
                         <tr>
@@ -30,17 +30,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($genres as $genre)
+                        @foreach ($link_providers as $link_provider)
                             <tr>
-                                <td>{{ $genre->id }}</td>
-                                <td><a href="{{ route('genres.edit', $genre->slug) }}">
+                                <td>{{ $link_provider->id }}</td>
+                                <td><a href="{{ route('link_providers.edit', $link_provider->slug) }}">
                                     <div class="lh-sm py-2">
-                                        {{ $genre->title }}
+                                        {{ $link_provider->title }}
                                     </div>
                                     </a>
                                 </td>
                                 <td>
-                                    <form action="{{ route('genres.destroy', $genre->slug) }}" method="post"
+                                    <form action="{{ route('link_providers.destroy', $link_provider->slug) }}" method="post"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('DELETE')
@@ -49,12 +49,10 @@
                                 </td>
                             </tr>
                         @endforeach
-
-
                     </tbody>
                 </table>
             @else
-                <p>No genres found.</p>
+                <p>No Link Provider found.</p>
             @endif
         </div>
 

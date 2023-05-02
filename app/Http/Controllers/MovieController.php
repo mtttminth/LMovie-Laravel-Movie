@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateContentRequest;
 use App\Models\Content;
 use App\Models\Genre;
 use App\Models\Link;
+use App\Models\LinkProvider;
 use App\Services\ContentService;
 use Illuminate\Http\Request;
 
@@ -27,19 +28,25 @@ class MovieController extends Controller
     public function create()
     {
         $genres = Genre::all();
-        return view('admin.movie.create', ['genres' => $genres]);
+        $link_providers = LinkProvider::all();
+        return view('admin.movie.create', ['genres' => $genres, 'link_providers' => $link_providers,]);
     }
 
     public function store(StoreContentRequest $request, ContentService $contentService)
     {
-        $contentLinks = new Link($request->safe()->only(['link_services', 'link_types', 'link_urls']));
+        $movieData = $request->movieData();
+        $genres = $request->genreIds();
+        $linkData = $request->linkData();
 
-        $content = auth()->user()->contents()->create($request->safe()->except(['genres', 'view', 'link_services', 'link_types', 'link_urls']));
-        $content->genres()->attach($request->genres);
-        $contentService->storeLink($content, $contentLinks);
+        $movie = $contentService->storeMovie($movieData);
+        $contentService->syncGenres($movie, $genres);
 
-        session()->flash('movie-created-message', $content['title'] . ' created');
-        return back();
+        if ($request->has('link_urls')) {
+            $contentService->storeLinks($movie, $linkData);
+        }
+
+        session()->flash('movie-created-message', $movieData['title'] . ' created');
+        return redirect()->route('movies.index');
     }
 
     public function edit(Content $movie)
@@ -51,23 +58,27 @@ class MovieController extends Controller
 
     public function update(UpdateContentRequest $request, ContentService $contentService, Content $movie)
     {
-        $movie->update($request->safe()->except(['genres', 'view', 'link_services', 'link_types', 'link_urls']));
-        $movie->genres()->sync($request->genres);
+        $movieData = $request->movieData();
+        $genres = $request->genreIds();
+        $linkData = $request->linkData();
 
-        $contentLinks = new Link($request->safe()->only(['link_services', 'link_types', 'link_urls']));
-        $contentService->updateLink($movie, $contentLinks);
+        $contentService->updateMovie($movie, $movieData);
+        $contentService->syncGenres($movie, $genres);
+
+        if ($request->has('link_urls')) {
+            $contentService->storeLinks($movie, $linkData);
+        }
 
         session()->flash('movie-updated-message', $movie['title'] . ' updated');
         return redirect()->route('movies.index');
     }
 
 
-    public function destroy(Content $movie, Request $request)
+    public function destroy(Content $movie, ContentService $contentService)
     {
-        $movie->genres()->detach();
-        $movie->delete();
+        $contentService->deleteMovie($movie);
 
-        $request->session()->flash('movie-deleted-message', $movie['title'] . ' was deleted');
-        return back();
+        session()->flash('movie-deleted-message', $movie['title'] . ' was deleted');
+        return redirect()->route('movies.index');
     }
 }

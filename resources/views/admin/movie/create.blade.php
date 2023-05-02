@@ -150,7 +150,7 @@
                                 <table class="table table-themev2 shadow-none border-gray-100 align-middle linkEvents">
                                     <thead>
                                         <tr class="text-gray-500 fs-xs">
-                                            <th scope="col">Service</th>
+                                            <th scope="col">Provider</th>
                                             <th scope="col">Type</th>
                                             <th scope="col">URL</th>
                                             <th scope="col"></th>
@@ -158,11 +158,11 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><select name="link_services[]" class="form-select"
-                                                    aria-label="Choose Service">
-                                                    <option>StreamSB</option>
-                                                    <option>StreamDD</option>
-                                                    <option>WorkUpload</option>
+                                            <td><select name="link_providers[]" class="form-select"
+                                                    aria-label="Choose Provider">
+                                                    @foreach($link_providers as $link_provider)
+                                                    <option>{{ $link_provider->title }}</option>
+                                                    @endforeach
                                                 </select></td>
                                             <td><select name="link_types[]" class="form-select" aria-label="Choose Type">
                                                     <option>Free</option>

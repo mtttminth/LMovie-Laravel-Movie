@@ -40,9 +40,24 @@ class UpdateContentRequest extends FormRequest
             'feature' => 'required|boolean',
             'member_only' => 'required|boolean',
             'genres' => 'required|exists:genres,id',
-            'link_services' => 'nullable',
+            'link_providers' => 'nullable',
             'link_types' => 'nullable',
             'link_urls' => 'nullable',
         ];
+    }
+
+    public function movieData()
+    {
+        return $this->only(['tmdb_id', 'title', 'slug', 'cover', 'poster', 'overview', 'content_type', 'duration', 'trailer', 'release_date', 'rating', 'publish', 'feature', 'member_only']);
+    }
+
+    public function linkData()
+    {
+        return $this->only(['link_providers', 'link_types', 'link_urls']);
+    }
+
+    public function genreIds()
+    {
+        return $this->input('genres', []);
     }
 }

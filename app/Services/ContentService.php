@@ -2,41 +2,84 @@
 
 namespace App\Services;
 
-
+use App\Models\Content;
 use App\Models\Link;
 
 class ContentService
 {
-
-    public function storeLink($content, $contentLinks): void
+    public function storeContent(array $contentData): Content
     {
-        foreach ($contentLinks->link_urls as $key => $link_url) {
-            $link = new Link();
-            $link->link_service = $contentLinks->link_services[$key];
-            $link->link_type = $contentLinks->link_types[$key];
-            $link->link_url = $contentLinks->link_urls[$key];
-            $content->links()->save($link);
-        }
+        return auth()->user()->contents()->create($contentData);
     }
 
-    public function updateLink($movie, $contentLinks): void
+    public function updateContent(Content $content, array $contentData): Content
     {
-        $movie->links()->delete();
-        foreach ($contentLinks->link_urls as $key => $link_url) {
-            $link = new Link();
-            $link->link_service = $contentLinks->link_services[$key];
-            $link->link_type = $contentLinks->link_types[$key];
-            $link->link_url = $contentLinks->link_urls[$key];
-            $movie->links()->save($link);
+        $content->update($contentData);
+        return $content;
+    }
+
+    public function deleteContent(Content $content): void
+    {
+        // detach all related genres
+        $content->genres()->detach();
+
+        // delete the content
+        $content->delete();
+    }
+
+    public function syncGenres($content, array $genres): void
+    {
+        $content->genres()->sync($genres);
+    }
+
+    public function storeLinks($content, array $linkData): void
+    {
+        foreach ($linkData['link_urls'] as $key => $link_url) {
+            $link = new Link([
+                'link_provider' => $linkData['link_providers'][$key],
+                'link_type' => $linkData['link_types'][$key],
+                'link_url' => $link_url,
+            ]);
+
+            $content->links()->save($link);
         }
     }
 }
 
-// $links = [];
-        // foreach ($contentLinks->link_urls as $key => $link_url)
-        //     $movie->links()->delete(); // Delete old links
-        // $movie->links()->create([
-        //     'link_service' => $contentLinks->link_services[$key],
-        //     'link_type' => $contentLinks->link_types[$key],
-        //     'link_url' => $contentLinks->link_urls[$key]
-        // ]);
+
+
+// public function storeMovie(array $movieData): Content
+//     {
+//         return auth()->user()->contents()->create($movieData);
+//     }
+
+//     public function updateMovie(Content $movie, array $movieData): Content
+//     {
+//         $movie->update($movieData);
+//         return $movie;
+//     }
+
+//     public function deleteMovie(Content $movie): void
+//     {
+//         $movie->genres()->detach();
+//         $movie->delete();
+//     }
+
+//     public function syncGenres($movie, array $genres): void
+//     {
+//         $movie->genres()->sync($genres);
+//     }
+
+//     public function storeLinks($movie, array $linkData): void
+//     {
+//         $movie->links()->delete();
+//         foreach ($linkData['link_urls'] as $key => $link_url) {
+//             $link = new Link([
+//                 'link_provider' => $linkData['link_providers'][$key],
+//                 'link_type' => $linkData['link_types'][$key],
+//                 'link_url' => $link_url,
+//             ]);
+
+//             $movie->links()->save($link);
+//         }
+//     }

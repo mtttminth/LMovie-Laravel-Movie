@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('links', function (Blueprint $table) {
             $table->id();
             $table->foreignId('content_id')->constrained()->onDelete('cascade');;
-            $table->string('link_service');
-            $table->string('link_type');
-            $table->text('link_url');
+            $table->string('link_provider')->nullable();
+            $table->string('link_type')->nullable();
+            $table->text('link_url')->nullable();
             $table->timestamps();
         });
     }

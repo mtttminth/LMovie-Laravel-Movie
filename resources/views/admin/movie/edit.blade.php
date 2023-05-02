@@ -156,7 +156,7 @@
                                 <table class="table table-themev2 shadow-none border-gray-100 align-middle linkEvents">
                                     <thead>
                                         <tr class="text-gray-500 fs-xs">
-                                            <th scope="col">Service</th>
+                                            <th scope="col">provider</th>
                                             <th scope="col">Type</th>
                                             <th scope="col">URL</th>
                                             <th scope="col"></th>
@@ -165,16 +165,16 @@
                                     <tbody>
                                         @foreach ($links as $link)
                                             <tr>
-                                                <td><select name="link_services[]" class="form-select"
-                                                        aria-label="Choose Service">
+                                                <td><select name="link_providers[]" class="form-select"
+                                                        aria-label="Choose provider">
                                                         <option value="StreamSB"
-                                                            {{ $link->link_service == 'StreamSB' ? 'selected' : '' }}>
+                                                            {{ $link->link_provider == 'StreamSB' ? 'selected' : '' }}>
                                                             StreamSB</option>
                                                         <option
-                                                            value="StreamDD"{{ $link->link_service == 'StreamDD' ? 'selected' : '' }}>
+                                                            value="StreamDD"{{ $link->link_provider == 'StreamDD' ? 'selected' : '' }}>
                                                             StreamDD</option>
                                                         <option
-                                                            value="WorkUpload"{{ $link->link_service == 'WorkUpload' ? 'selected' : '' }}>
+                                                            value="WorkUpload"{{ $link->link_provider == 'WorkUpload' ? 'selected' : '' }}>
                                                             WorkUpload</option>
                                                     </select></td>
                                                 <td><select name="link_types[]" class="form-select"

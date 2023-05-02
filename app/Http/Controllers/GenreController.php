@@ -39,7 +39,7 @@ class GenreController extends Controller
     {
         $genre = Genre::create($request->validated());
         session()->flash('movie-created-message', $genre['title'] . ' created');
-        return back();
+        return redirect()->route('genres.index');
     }
 
     /**
@@ -78,6 +78,6 @@ class GenreController extends Controller
         $genre->contents()->detach();
         $genre->delete();
         session()->flash('genre-deleted-message', $genre['title'] . ' was deleted');
-        return back();
+        return redirect()->route('genres.index');
     }
 }
