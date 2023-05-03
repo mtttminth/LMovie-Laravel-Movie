@@ -96,11 +96,12 @@
                             </div>
 
                             <input type="hidden" name="content_type" value="movie">
+
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="release_date" id="release_date" class="form-control"
-                                            placeholder="Release Year" aria-describedby="">
+                                        <input type="date" name="release_date" id="release_date" class="form-control"
+                                            placeholder="Release Date" aria-describedby="">
                                         <label for="release_date" class="form-label">Release Date</label>
                                         @error('release_date')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -133,7 +134,7 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" name="trailer" id="trailer" class="form-control"
+                                <input type="url" name="trailer" id="trailer" class="form-control"
                                     placeholder="trailer" aria-describedby="">
                                 <label for="trailer" class="form-label">Trailer</label>
                                 @error('trailer')
@@ -161,7 +162,7 @@
                                             <td><select name="link_providers[]" class="form-select"
                                                     aria-label="Choose Provider">
                                                     @foreach ($link_providers as $link_provider)
-                                                        <option value="{{ $link_provider->$link_provider->title }}">
+                                                        <option value="{{ $link_provider->title }}">
                                                             {{ $link_provider->title }}</option>
                                                     @endforeach
                                                 </select>
@@ -178,7 +179,7 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </td>
-                                            <td><input name="link_urls[]" class="form-control" type="text"
+                                            <td><input name="link_urls[]" class="form-control" type="url"
                                                     placeholder="Enter URL" aria-label="default input example">
                                                 @error('link_urls.*')
                                                     <span class="text-danger">{{ $message }}</span>

@@ -100,10 +100,11 @@
                             </div>
 
                             <input type="hidden" name="content_type" value="movie">
+
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="release_date" id="release_date"
+                                        <input type="date" name="release_date" id="release_date"
                                             value="{{ $movie->release_date }}" class="form-control"
                                             placeholder="Release Year" aria-describedby="">
                                         <label for="release_date" class="form-label">Release Date</label>
@@ -139,7 +140,7 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="text" name="trailer" id="trailer" value="{{ $movie->trailer }}"
+                                <input type="url" name="trailer" id="trailer" value="{{ $movie->trailer }}"
                                     class="form-control" placeholder="trailer" aria-describedby="">
                                 <label for="trailer" class="form-label">Trailer</label>
                                 @error('trailer')
@@ -190,7 +191,7 @@
                                                             Download</option>
                                                     </select></td>
                                                 <td><input name="link_urls[]" value="{{ $link->link_url }}"
-                                                        class="form-control" type="text" placeholder="URL"
+                                                        class="form-control" type="url" placeholder="Enter URL"
                                                         aria-label="default input example"></td>
                                                 <td>
                                                     <button class="btn btn-danger removeEvent my-3"><i

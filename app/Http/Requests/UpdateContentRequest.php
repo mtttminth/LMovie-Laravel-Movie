@@ -25,24 +25,27 @@ class UpdateContentRequest extends FormRequest
     public function rules()
     {
         return [
-            'tmdb_id' => 'nullable',
+            'tmdb_id' => 'unique:contents|nullable|integer',
             'title' => 'required',
             'slug' => ['required', Rule::unique('contents')->ignore($this->movie->id)],
             'cover' => 'nullable',
             'poster' => 'nullable',
             'overview' => 'nullable',
-            'content_type' => 'required',
-            'duration' => 'nullable',
-            'trailer' => 'nullable',
-            'release_date' => 'required',
-            'rating' => 'required|numeric|min:0|max:10',
+            'content_type' => 'required|in:movie,series',
+            'duration' => 'nullable|integer|min:1',
+            'trailer' => 'nullable|url',
+            'release_date' => 'required|date',
+            'rating' => 'required|numeric|between:0,10',
             'publish' => 'required|boolean',
             'feature' => 'required|boolean',
             'member_only' => 'required|boolean',
-            'genres' => 'required|exists:genres,id',
-            'link_providers' => 'nullable',
-            'link_types' => 'nullable',
-            'link_urls' => 'nullable',
+            'genres' => 'required|exists:genres,id|array',
+            'link_providers' => 'nullable|array',
+            'link_types' => 'nullable|array',
+            'link_urls' => 'nullable|array',
+            'link_providers.*' => 'string',
+            'link_types.*' => 'string',
+            'link_urls.*' => 'url',
         ];
     }
 
@@ -59,5 +62,14 @@ class UpdateContentRequest extends FormRequest
     public function genreIds()
     {
         return $this->input('genres', []);
+    }
+
+    public function messages()
+    {
+        return [
+            'link_providers.*.required' => 'The provider field is required.',
+            'link_types.*.required' => 'The type field is required.',
+            'link_urls.*.url' => 'The URL field must be a valid URL.',
+        ];
     }
 }
