@@ -38,7 +38,7 @@ class MovieController extends Controller
         $genres = $request->genreIds();
         $linkData = $request->linkData();
 
-        $movie = $contentService->storeMovie($movieData);
+        $movie = $contentService->storeContent($movieData);
         $contentService->syncGenres($movie, $genres);
 
         if ($request->has('link_urls')) {
@@ -52,8 +52,9 @@ class MovieController extends Controller
     public function edit(Content $movie)
     {
         $genres = Genre::all();
+        $link_providers = LinkProvider::all();
         $links = Link::where('content_id', $movie->id)->get();
-        return view('admin.movie.edit', ['movie' => $movie, 'genres' => $genres, 'links' => $links]);
+        return view('admin.movie.edit', ['movie' => $movie, 'genres' => $genres, 'links' => $links, 'link_providers' => $link_providers]);
     }
 
     public function update(UpdateContentRequest $request, ContentService $contentService, Content $movie)
@@ -62,7 +63,7 @@ class MovieController extends Controller
         $genres = $request->genreIds();
         $linkData = $request->linkData();
 
-        $contentService->updateMovie($movie, $movieData);
+        $contentService->updateContent($movie, $movieData);
         $contentService->syncGenres($movie, $genres);
 
         if ($request->has('link_urls')) {
@@ -76,7 +77,7 @@ class MovieController extends Controller
 
     public function destroy(Content $movie, ContentService $contentService)
     {
-        $contentService->deleteMovie($movie);
+        $contentService->deleteContent($movie);
 
         session()->flash('movie-deleted-message', $movie['title'] . ' was deleted');
         return redirect()->route('movies.index');

@@ -20,10 +20,7 @@ class ContentService
 
     public function deleteContent(Content $content): void
     {
-        // detach all related genres
         $content->genres()->detach();
-
-        // delete the content
         $content->delete();
     }
 
@@ -34,6 +31,7 @@ class ContentService
 
     public function storeLinks($content, array $linkData): void
     {
+        $content->links()->delete();
         foreach ($linkData['link_urls'] as $key => $link_url) {
             $link = new Link([
                 'link_provider' => $linkData['link_providers'][$key],
@@ -45,41 +43,3 @@ class ContentService
         }
     }
 }
-
-
-
-// public function storeMovie(array $movieData): Content
-//     {
-//         return auth()->user()->contents()->create($movieData);
-//     }
-
-//     public function updateMovie(Content $movie, array $movieData): Content
-//     {
-//         $movie->update($movieData);
-//         return $movie;
-//     }
-
-//     public function deleteMovie(Content $movie): void
-//     {
-//         $movie->genres()->detach();
-//         $movie->delete();
-//     }
-
-//     public function syncGenres($movie, array $genres): void
-//     {
-//         $movie->genres()->sync($genres);
-//     }
-
-//     public function storeLinks($movie, array $linkData): void
-//     {
-//         $movie->links()->delete();
-//         foreach ($linkData['link_urls'] as $key => $link_url) {
-//             $link = new Link([
-//                 'link_provider' => $linkData['link_providers'][$key],
-//                 'link_type' => $linkData['link_types'][$key],
-//                 'link_url' => $link_url,
-//             ]);
-
-//             $movie->links()->save($link);
-//         }
-//     }

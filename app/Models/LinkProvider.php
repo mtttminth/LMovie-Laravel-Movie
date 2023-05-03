@@ -12,6 +12,7 @@ class LinkProvider extends Model
 
     protected $fillable = [
         'title',
+        'slug'
     ];
 
     public function getRouteKeyName()

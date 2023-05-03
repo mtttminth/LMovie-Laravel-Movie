@@ -24,8 +24,13 @@ class StoreLinkProviderRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'slug' => 'unique:link_providers',
+            'title' => 'required|max:255',
+            'slug' =>  [
+                'required',
+                'alpha_dash',
+                'max:255',
+                'unique:link_providers',
+            ],
         ];
     }
 }

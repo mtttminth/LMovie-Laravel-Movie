@@ -127,7 +127,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="duration" id="duration"
+                                        <input type="number" name="duration" id="duration"
                                             value="{{ $movie->duration }}" class="form-control" placeholder="duration"
                                             aria-describedby="">
                                         <label for="duration" class="form-label">Duration</label>
@@ -167,16 +167,16 @@
                                             <tr>
                                                 <td><select name="link_providers[]" class="form-select"
                                                         aria-label="Choose provider">
-                                                        <option value="StreamSB"
-                                                            {{ $link->link_provider == 'StreamSB' ? 'selected' : '' }}>
-                                                            StreamSB</option>
-                                                        <option
-                                                            value="StreamDD"{{ $link->link_provider == 'StreamDD' ? 'selected' : '' }}>
-                                                            StreamDD</option>
-                                                        <option
-                                                            value="WorkUpload"{{ $link->link_provider == 'WorkUpload' ? 'selected' : '' }}>
-                                                            WorkUpload</option>
-                                                    </select></td>
+                                                        @foreach ($link_providers as $provider)
+                                                            <option
+                                                                value="{{ $provider->title }}"{{ $link->link_provider == $provider->title ? 'selected' : '' }}>
+                                                                {{ $provider->title }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('link_providers.*')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </td>
                                                 <td><select name="link_types[]" class="form-select"
                                                         aria-label="Choose Type">
                                                         <option

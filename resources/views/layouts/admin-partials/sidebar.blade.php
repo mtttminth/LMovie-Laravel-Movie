@@ -25,7 +25,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{route('link_providers.index')}}">
-            <i class="bi bi-tags"></i>
+            <i class="bi bi-hdd"></i>
           <span>Link Provider</span>
         </a>
       </li>

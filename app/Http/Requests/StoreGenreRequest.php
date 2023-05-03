@@ -24,8 +24,13 @@ class StoreGenreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'slug' => 'unique:genres',
+            'title' => 'required|max:255',
+            'slug' =>  [
+                'required',
+                'alpha_dash',
+                'max:255',
+                'unique:genres',
+            ],
         ];
     }
 }

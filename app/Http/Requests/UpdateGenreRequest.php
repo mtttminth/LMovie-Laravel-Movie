@@ -25,8 +25,14 @@ class UpdateGenreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'slug' => ['required', Rule::unique('genres')->ignore($this->genre->id)],
+            'title' => 'required|string|max:255',
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('genres')->ignore($this->genre->id),
+                'alpha_dash'
+            ],
         ];
     }
 }

@@ -122,7 +122,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="duration" id="duration" class="form-control"
+                                        <input type="number" name="duration" id="duration" class="form-control"
                                             placeholder="duration" aria-describedby="">
                                         <label for="duration" class="form-label">Duration</label>
                                         @error('duration')
@@ -160,17 +160,30 @@
                                         <tr>
                                             <td><select name="link_providers[]" class="form-select"
                                                     aria-label="Choose Provider">
-                                                    @foreach($link_providers as $link_provider)
-                                                    <option>{{ $link_provider->title }}</option>
+                                                    @foreach ($link_providers as $link_provider)
+                                                        <option value="{{ $link_provider->$link_provider->title }}">
+                                                            {{ $link_provider->title }}</option>
                                                     @endforeach
-                                                </select></td>
+                                                </select>
+                                                @error('link_providers.*')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
                                             <td><select name="link_types[]" class="form-select" aria-label="Choose Type">
-                                                    <option>Free</option>
-                                                    <option>Premium</option>
-                                                    <option>Download</option>
-                                                </select></td>
+                                                    <option value="free">Free</option>
+                                                    <option value="premium">Premium</option>
+                                                    <option value="download">Download</option>
+                                                </select>
+                                                @error('link_types.*')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
                                             <td><input name="link_urls[]" class="form-control" type="text"
-                                                    placeholder="URL" aria-label="default input example"></td>
+                                                    placeholder="Enter URL" aria-label="default input example">
+                                                @error('link_urls.*')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
                                             <td>
                                                 <button class="btn btn-danger removeEvent my-3"><i
                                                         class="bi bi-dash-circle-dotted"></i></button>
@@ -190,6 +203,9 @@
                         <label class="form-label fs-xs" for="tmdb_id">tmDB Importer</label>
                         <input name="tmdb_id" class="form-control" type="number" id="tmdb_id"
                             placeholder="tmDB or iMDB id">
+                        @error('tmdb_id')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <label class="form-label">Advanced</label>
@@ -198,6 +214,9 @@
                         <input name="publish" class="form-check-input" value="1" type="checkbox" role="switch"
                             id="publish">
                         <label class="form-check-label" for="publish">Publish</label>
+                        @error('publish')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-check form-switch mb-3">
@@ -205,6 +224,9 @@
                         <input name="feature" class="form-check-input" value="1" type="checkbox" role="switch"
                             id="feature">
                         <label class="form-check-label" for="feature">Feature</label>
+                        @error('feature')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-check form-switch mb-3">
@@ -212,6 +234,9 @@
                         <input type="checkbox" name="member_only" value="1" class="form-check-input"
                             role="switch" id="member_only">
                         <label class="form-check-label" for="member_only">Member Only</label>
+                        @error('member_only')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>

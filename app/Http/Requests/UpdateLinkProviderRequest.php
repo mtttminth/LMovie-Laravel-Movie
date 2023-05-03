@@ -25,8 +25,14 @@ class UpdateLinkProviderRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'slug' => ['required', Rule::unique('link_providers')->ignore($this->link_provider->id)],
+            'title' => 'required|string|max:255',
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('link_providers')->ignore($this->link_provider->id),
+                'alpha_dash'
+            ],
         ];
     }
 }

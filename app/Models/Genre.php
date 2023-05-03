@@ -12,6 +12,7 @@ class Genre extends Model
 
     protected $fillable = [
         'title',
+        'slug'
     ];
 
     public function contents()
