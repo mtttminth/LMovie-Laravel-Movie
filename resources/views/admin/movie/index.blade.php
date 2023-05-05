@@ -30,56 +30,24 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Cover</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($movies as $movie)
-                            <tr>
-                                <td>{{ $movie->id }}</td>
-                                <td class="d-flex">
-                                    <a href="{{ route('movies.edit', $movie->slug) }}">
-                                        <div class="w-lg-50px">
-                                            <picture>
-                                                <img src="{{ $movie->cover }}"alt=""
-                                                    class="img-fluid rounded-1 ls-is-cached lazyloaded" width="50"
-                                                    height="90">
-                                            </picture>
-                                        </div>
-                                    </a>
-                                    <a href="{{ route('movies.edit', $movie->slug) }}">
-                                        <div class="ps-4 lh-sm py-2">
-                                            {{ $movie->title }}
-                                        </div>
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="{{ route('movies.destroy', $movie->slug) }}" method="post"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-
-
                     </tbody>
                     <tfoot>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Cover</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
                     </tfoot>
                 </table>
-                <nav aria-label="Pagination">
-                    <ul class="pagination">
-                        {{ $movies->links() }}
-                    </ul>
-                </nav>
             </div>
         </div><!-- End Movies Datatables -->
     </div>
@@ -90,7 +58,38 @@
     <script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
     <script>
         $(document).ready(function() {
-            $("#datatable").DataTable();
+            $('#datatable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{{ route('api.admin.movie.index') }}",
+                "columns": [{
+                        "data": "id"
+                    },
+                    {
+                        "data": "cover"
+                    },
+                    {
+                        "data": "title"
+                    },
+                    {
+                        "data": "slug",
+                        "render": function(data, type, full, meta) {
+                            return '<a href="' + full.edit_url +
+                                '" class="btn btn-primary">Edit</a>';
+                        }
+                    },
+
+                    {
+                        "data": "slug",
+                        "render": function(data, type, full, meta) {
+                            return '<form action="' + full.delete_url + '" method="post">' +
+                                '@csrf @method('delete')' +
+                                '<button type="submit" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete this movie?\')">Delete</button>' +
+                                '</form>';
+                        }
+                    }
+                ]
+            });
         });
     </script>
 @endpush

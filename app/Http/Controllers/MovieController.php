@@ -16,10 +16,7 @@ class MovieController extends Controller
 
     public function index()
     {
-        $movies = Content::where('content_type', 'movie')->paginate(10);
-
-        // $movies = Content::where('content_type', 'movie')->get();
-        return view('admin.movie.index', ['movies' => $movies]);
+        return view('admin.movie.index');
     }
 
     public function show(Content $content)
