@@ -31,7 +31,7 @@ class ContentService
 
     public function storeLinks($content, array $linkData): void
     {
-        $content->links()->delete();
+        $content->contentLinks()->delete();
         foreach ($linkData['link_urls'] as $key => $link_url) {
             $link = new Link([
                 'link_provider' => $linkData['link_providers'][$key],
@@ -39,7 +39,7 @@ class ContentService
                 'link_url' => $link_url,
             ]);
 
-            $content->links()->save($link);
+            $content->contentLinks()->save($link);
         }
     }
 }

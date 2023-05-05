@@ -1,16 +1,25 @@
 @extends('layouts.admin')
 
-@section('styles')
+@push('styles')
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-@endsection
-
+@endpush
 @section('content')
     <h1>Create Movie</h1>
 
     @include('components.alerts')
+
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <div class="container">
 
@@ -157,41 +166,7 @@
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><select name="link_providers[]" class="form-select"
-                                                    aria-label="Choose Provider">
-                                                    @foreach ($link_providers as $link_provider)
-                                                        <option value="{{ $link_provider->title }}">
-                                                            {{ $link_provider->title }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('link_providers.*')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </td>
-                                            <td><select name="link_types[]" class="form-select" aria-label="Choose Type">
-                                                    <option value="free">Free</option>
-                                                    <option value="premium">Premium</option>
-                                                    <option value="download">Download</option>
-                                                </select>
-                                                @error('link_types.*')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </td>
-                                            <td><input name="link_urls[]" class="form-control" type="url"
-                                                    placeholder="Enter URL" aria-label="default input example">
-                                                @error('link_urls.*')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-danger removeEvent my-3"><i
-                                                        class="bi bi-dash-circle-dotted"></i></button>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                             </div>
                         </div>
@@ -279,18 +254,16 @@
             let index = $options.find('tr').length;
             $('.addEvent').click(function(e) {
                 e.preventDefault();
-                let $newRow = $options.find('tr:last').clone();
-                index++;
-                $newRow.appendTo($options);
+                let $newRow = $(
+                    '<tr><td><select name="link_providers[]" class="form-select" aria-label="Choose Provider">@foreach ($link_providers as $link_provider)<option value="{{ $link_provider->title }}">{{ $link_provider->title }}</option>@endforeach</select></td><td><select name="link_types[]" class="form-select" aria-label="Choose Type"><option value="free">Free</option><option value="premium">Premium</option><option value="download">Download</option></select></td><td><input name="link_urls[]" class="form-control" type="url" placeholder="Enter URL" aria-label="default input example"></td><td><button class="btn btn-danger removeEvent my-3"><i class="bi bi-dash-circle-dotted"></i></button></td></tr>'
+                );
+                $options.append($newRow);
             });
 
             $options.on('click', '.removeEvent', function(e) {
                 e.preventDefault();
-                if ($options.find('tr').length > 1) {
-                    $(this).closest('tr').remove();
-                }
+                $(this).closest('tr').remove();
             });
-
         });
     </script>
 @endpush

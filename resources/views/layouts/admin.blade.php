@@ -23,11 +23,10 @@
 
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
 
-  <link rel="stylesheet" href="{{ asset('assets/vendor/simple-datatables/style.css') }}">
   <!-- Template Main CSS File -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
-  @yield('styles')
+  @stack('styles')
 
 </head>
 

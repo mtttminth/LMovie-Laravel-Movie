@@ -22,7 +22,7 @@ class Content extends Model
         return $this->belongsToMany(Genre::class);
     }
 
-    public function links()
+    public function contentLinks()
     {
         return $this->hasMany(Link::class);
     }

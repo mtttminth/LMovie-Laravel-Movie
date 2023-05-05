@@ -6,7 +6,7 @@
 
     <div class="col-12">
 
-        <!-- Genres Filter -->
+        <!-- Link Providers Filter -->
         <div class="card recent-sales overflow-auto">
             <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -19,7 +19,7 @@
                 </ul>
             </div>
 
-            <!-- Genres Datatables -->
+            <!-- Link Providers Datatables -->
             @if ($link_providers->isNotEmpty())
                 <table class="table table-borderless datatable">
                     <thead>
@@ -57,7 +57,7 @@
         </div>
 
     </div>
-    </div><!-- End Genres Datatables -->
+    </div><!-- End Link Providers Datatables -->
 @endsection
 
 
