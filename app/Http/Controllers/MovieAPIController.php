@@ -9,7 +9,7 @@ class MovieAPIController extends Controller
 {
     public function getMovies()
     {
-        $query = Content::select('id', 'cover', 'title', 'slug');
+        $query = Content::where('content_type', 'movie')->select('id', 'cover', 'title', 'slug');
         return datatables($query)
             ->editColumn('cover', function ($movie) {
                 return '<img src="' . $movie->cover . '" alt="Movie Cover" width="50">';

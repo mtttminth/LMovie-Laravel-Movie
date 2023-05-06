@@ -26,7 +26,7 @@ class UpdateContentRequest extends FormRequest
     {
         return [
             'tmdb_id' => [
-                'unique:contents',
+                'required',
                 Rule::unique('contents')->ignore($this->movie->id),
                 'nullable',
                 'integer'
