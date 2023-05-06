@@ -19,5 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('api/v1/movies', [MovieAPIController::class, 'getMovies'])
+Route::get('api/movies', [MovieAPIController::class, 'getMovies'])
     ->name('api.admin.movie.index');

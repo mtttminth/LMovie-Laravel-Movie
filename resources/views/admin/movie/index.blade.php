@@ -83,7 +83,7 @@
                         "data": "slug",
                         "render": function(data, type, full, meta) {
                             return '<form action="' + full.delete_url + '" method="post">' +
-                                '@csrf @method('delete')' +
+                                '@csrf @method("delete")' +
                                 '<button type="submit" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete this movie?\')">Delete</button>' +
                                 '</form>';
                         }
