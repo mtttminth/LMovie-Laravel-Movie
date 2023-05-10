@@ -11,45 +11,29 @@
 
     <div class="container">
         <div class="col-12">
-
-            <!-- Movies Filter -->
-            <div class="card recent-sales overflow-auto">
-                <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                            <h6>Filter</h6>
-                        </li>
-                        <li><a class="dropdown-item" href="#">Newest</a></li>
-                        <li><a class="dropdown-item" href="#">Oldest</a></li>
-                    </ul>
-                </div>
-
-                <!-- Movies Datatables -->
-                <table id="datatable" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Cover</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Edit</th>
-                            <th scope="col">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Cover</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Edit</th>
-                            <th scope="col">Delete</th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div><!-- End Movies Datatables -->
+            <table id="datatable" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Cover</th>
+                        <th scope="col">Title</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Cover</th>
+                        <th scope="col">Title</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 @endsection
 

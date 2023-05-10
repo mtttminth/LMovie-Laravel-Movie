@@ -21,6 +21,6 @@ class MovieAPIController extends Controller
                 return route('movies.destroy', $movie->slug);
             })
             ->rawColumns(['cover'])
-            ->make(true);
+            ->toJson();
     }
 }

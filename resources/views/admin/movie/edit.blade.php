@@ -191,23 +191,23 @@
                                                 <td><select name="link_types[]" class="form-select"
                                                         aria-label="Choose Type">
                                                         <option
-                                                            value="Free"{{ $link->link_type == 'Free' ? 'selected' : '' }}>
+                                                            value="free"{{ $link->link_type == 'free' ? 'selected' : '' }}>
                                                             Free</option>
                                                         <option
-                                                            value="Premium"{{ $link->link_type == 'Premium' ? 'selected' : '' }}>
+                                                            value="premium"{{ $link->link_type == 'premium' ? 'selected' : '' }}>
                                                             Premium</option>
                                                         <option
-                                                            value="Download"{{ $link->link_type == 'Download' ? 'selected' : '' }}>
+                                                            value="download"{{ $link->link_type == 'download' ? 'selected' : '' }}>
                                                             Download</option>
                                                     </select>
-                                                    @error('link_providers.*')
+                                                    @error('link_types.*')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </td>
                                                 <td><input name="link_urls[]" value="{{ $link->link_url }}"
                                                         class="form-control" type="url" placeholder="Enter URL"
                                                         aria-label="default input example">
-                                                    @error('link_providers.*')
+                                                    @error('link_urls.*')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </td>

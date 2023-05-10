@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Content;
+use App\Models\Genre;
 use App\Models\User;
-use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -15,7 +15,7 @@ class ContentFactory extends Factory
 {
     protected $model = Content::class;
 
-    public function definition()
+    public function definition(): array
     {
         $title = $this->faker->unique()->sentence(3);
         $slug = Str::slug($title);
@@ -39,5 +39,14 @@ class ContentFactory extends Factory
             'feature' => $this->faker->boolean(),
             'member_only' => $this->faker->boolean(),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Content $content) {
+            $genreIds = Genre::pluck('id')->random(3); // Assuming 3 random genre IDs
+
+            $content->genres()->sync($genreIds);
+        });
     }
 }
