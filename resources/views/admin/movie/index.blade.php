@@ -18,7 +18,6 @@
                         <th scope="col">Cover</th>
                         <th scope="col">Title</th>
                         <th scope="col"></th>
-                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +27,6 @@
                         <th scope="col">ID</th>
                         <th scope="col">Cover</th>
                         <th scope="col">Title</th>
-                        <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
                 </tfoot>
@@ -50,26 +48,28 @@
                         "data": "id"
                     },
                     {
-                        "data": "cover"
+                        "data": "cover",
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         "data": "title"
                     },
                     {
                         "data": "slug",
+                        "orderable": false,
+                        "searchable": false,
                         "render": function(data, type, full, meta) {
-                            return '<a href="' + full.edit_url +
-                                '" class="btn btn-primary">Edit</a>';
-                        }
-                    },
-
-                    {
-                        "data": "slug",
-                        "render": function(data, type, full, meta) {
-                            return '<form action="' + full.delete_url + '" method="post">' +
-                                '@csrf @method("delete")' +
+                            let deleteButton = '<form action="' + full.actions.delete_url +
+                                '" method="POST" class="d-inline">' +
+                                '@csrf @method("DELETE")' +
                                 '<button type="submit" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete this movie?\')">Delete</button>' +
                                 '</form>';
+                            return '<div class="btn-group">' +
+                                '<a href="' + full.actions.edit_url +
+                                '" class="btn btn-primary">Edit</a>' +
+                                deleteButton +
+                                '</div>';
                         }
                     }
                 ]

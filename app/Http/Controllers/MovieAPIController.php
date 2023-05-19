@@ -14,11 +14,14 @@ class MovieAPIController extends Controller
             ->editColumn('cover', function ($movie) {
                 return '<img src="' . $movie->cover . '" alt="Movie Cover" width="50">';
             })
-            ->addColumn('edit_url', function ($movie) {
-                return route('movies.edit', $movie->slug);
-            })
-            ->addColumn('delete_url', function ($movie) {
-                return route('movies.destroy', $movie->slug);
+            ->addColumn('actions', function ($movie) {
+                $editUrl = route('movies.edit', $movie->slug);
+                $deleteUrl = route('movies.destroy', $movie->slug);
+
+                return [
+                    'edit_url' => $editUrl,
+                    'delete_url' => $deleteUrl
+                ];
             })
             ->rawColumns(['cover'])
             ->toJson();
