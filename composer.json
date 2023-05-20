@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.11",
+        "spatie/laravel-permission": "^5.10",
         "yajra/laravel-datatables": "^9.0"
     },
     "require-dev": {
