@@ -17,10 +17,10 @@ class RoleSeeder extends Seeder
     {
         $roles = [
             'Admin',
-            'Content Manager',
             'Moderator',
+            'Content Manager',
             'Editor',
-            'Premium_User',
+            'Premium User',
             'User',
         ];
 
@@ -30,34 +30,53 @@ class RoleSeeder extends Seeder
 
         // NOTE: Admin role bypass auth checks, see AuthServiceProvider.
 
-        $contentManagerRole = Role::where('name', 'Content Manager')->first();
         $moderatorRole = Role::where('name', 'Moderator')->first();
+        $contentManagerRole = Role::where('name', 'Content Manager')->first();
         $editorRole = Role::where('name', 'Editor')->first();
+        $premiumUserRole = Role::where('name', 'Premium User')->first();
         $userRole = Role::where('name', 'User')->first();
 
-        $contentManagerPermissions = [
-            'content_create',
-            'content_read',
-            'content_update',
-            'content_delete',
-            'content_view',
-        ];
-        $contentManagerRole->syncPermissions($contentManagerPermissions);
-
         $moderatorPermissions = [
-            'content_read',
+            'admin_read',
+            'premium_read',
+            'user_create',
+            'user_read',
+            'user_update',
+            'user_delete',
+            'user_list',
             'comment_create',
             'comment_update',
             'comment_delete',
         ];
         $moderatorRole->syncPermissions($moderatorPermissions);
 
-        $editorPermissions = [
+        $contentManagerPermissions = [
+            'admin_read',
+            'premium_read',
             'content_create',
+            'content_read',
+            'content_update',
+            'content_delete',
+        ];
+        $contentManagerRole->syncPermissions($contentManagerPermissions);
+
+        $editorPermissions = [
+            'admin_read',
+            'premium_read',
+            'content_create',
+            'content_read',
             'content_update',
             'content_delete',
         ];
         $editorRole->syncPermissions($editorPermissions);
+
+        $premiumUserPermissions = [
+            'premium_read',
+            'comment_create',
+            'comment_update',
+            'comment_delete',
+        ];
+        $premiumUserRole->syncPermissions($premiumUserPermissions);
 
         $userPermissions = [
             'comment_create',

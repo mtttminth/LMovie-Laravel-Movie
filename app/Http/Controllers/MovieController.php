@@ -16,16 +16,14 @@ class MovieController extends Controller
 
     public function index()
     {
+        $this->authorize('content_read');
         return view('admin.movie.index');
-    }
-
-    public function show(Content $content)
-    {
-        //
     }
 
     public function create()
     {
+        $this->authorize('content_create');
+
         $genres = Genre::all();
         $link_providers = LinkProvider::all();
         return view('admin.movie.create', ['genres' => $genres, 'link_providers' => $link_providers,]);
@@ -33,6 +31,8 @@ class MovieController extends Controller
 
     public function store(StoreContentRequest $request, ContentService $contentService)
     {
+        $this->authorize('content_create');
+
         $movieData = $request->movieData();
         $genres = $request->genreIds();
         $linkData = $request->linkData();
@@ -50,6 +50,8 @@ class MovieController extends Controller
 
     public function edit(Content $movie)
     {
+        $this->authorize('content_update');
+
         $genres = Genre::all();
         $link_providers = LinkProvider::all();
         $links = Link::where('content_id', $movie->id)->get();
@@ -58,6 +60,8 @@ class MovieController extends Controller
 
     public function update(UpdateContentRequest $request, ContentService $contentService, Content $movie)
     {
+        $this->authorize('content_update');
+
         $movieData = $request->movieData();
         $genres = $request->genreIds();
         $linkData = $request->linkData();
@@ -76,6 +80,8 @@ class MovieController extends Controller
 
     public function destroy(Content $movie, ContentService $contentService)
     {
+        $this->authorize('content_delete');
+
         $contentService->deleteContent($movie);
 
         session()->flash('movie-deleted-message', $movie['title'] . ' was deleted');
